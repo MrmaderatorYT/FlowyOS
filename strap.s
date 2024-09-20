@@ -1,12 +1,13 @@
-.globl _start
+.global _start
 _start:
-    mov sp,#0x20000
-    bl notmain
+    ldr x0, =0x20000
+	mov sp, x0
+	bl notmain
 hang:
     b hang
 
-.globl PUT32
+.global PUT32
 PUT32:
-    str r1,[r0]
-    bx lr
+    str w1,[x0]
+    ret
 	
