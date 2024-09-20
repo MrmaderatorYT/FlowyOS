@@ -8,14 +8,14 @@ sudo apt update
 sudo apt upgrade
 
 І завантажуємо необхідні компоненти (емулятор, компілятор ассемблерного коду та С/С++)
-sudo apt install build-essential gcc-arm-none-eabi qemu-system-arm
+sudo apt install build-essential aarch64-linux-gnu qemu-system-arm
 
 І запукаємо:
-arm-none-eabi-as --warn --fatal-warnings -march=armv5t strap.s -o strap.o
-arm-none-eabi-gcc -c -Wall -O2 -nostdlib -nostartfiles -ffreestanding -march=armv5t notmain.c -o notmain.o
-arm-none-eabi-ld strap.o notmain.o -T memmap -o notmain.elf
-arm-none-eabi-objcopy notmain.elf -O binary notmain.bin
+aarch64-linux-gnu-as --warn --fatal-warnings -march=armv8-a strap.s -o strap.o
+aarch64-linux-gnu-gcc -c -Wall -O2 -nostdlib -nostartfiles -ffreestanding -march=armv8-a notmain.c -o notmain.o
+aarch64-linux-gnu-ld strap.o notmain.o -T memmap -o notmain.elf
+aarch64-linux-gnu-objcopy notmain.elf -O binary os.bin
+qemu-system-aarch64 -M virt -cpu cortex-a53 -m 128 -serial mon:stdio -kernel os.bin
 
-qemu-system-arm -M versatilepb -m 128M -nographic -kernel os.bin
 
-Отримуємо Hello, from ASM!
+Отримуємо можливість введення та виведення даних з клавіатури
