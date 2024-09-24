@@ -22,4 +22,6 @@ sudo apt install build-essential aarch64-linux-gnu qemu-system-arm
 > qemu-system-aarch64 -M virt -cpu cortex-a53 -m 128 -serial mon:stdio -kernel os.bin
 
 
-Отримуємо можливість введення та виведення даних з клавіатури
+### Плани розробки
+- [ ] команда version
+- [ ] файлова система
