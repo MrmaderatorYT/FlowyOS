@@ -1,13 +1,7 @@
-.global _start
-_start:
-    ldr x0, =0x20000
-	mov sp, x0
-	bl notmain
-hang:
-    b hang
-
-.global PUT32
-PUT32:
-    str w1,[x0]
-    ret
+.global _main
+_main:
+    ldr x30, =stack_top	// setup stack
+    mov sp, x30
+    bl notmain
+    b .
 	
