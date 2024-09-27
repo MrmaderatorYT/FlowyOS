@@ -1,10 +1,12 @@
-MEMORY
-{
-    ram  : ORIGIN = 0x00010000, LENGTH = 32K
-}
-
+ENTRY(_main)
 SECTIONS
 {
-   .text : { *(.text*) } > ram
-   .bss  : { *(.bss*) } > ram
+	. = 0x40000000;
+	.startup . : { strap.o(.text) }
+	.text : { *(.text) }
+	.data : { *(.data) }
+	.bss : { *(.bss COMMON) }
+	. = ALIGN(8);
+	. = . + 0x1000; /* 4kB of stack memory */
+	stack_top = .;
 }
