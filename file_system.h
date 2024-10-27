@@ -26,6 +26,6 @@ int create_file(const char *name);
 void list_directory();
 File *find_file(const char *name);
 void process_command(const char *cmd, int *debug_mode);
-void prirt_command(const char *cmd, int debug_mode);
+void print_command(const char *cmd, int debug_mode);
 
 #endif
