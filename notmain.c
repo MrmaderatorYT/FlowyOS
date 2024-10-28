@@ -13,8 +13,9 @@ void notmain(void){
 	char command_history[COMMAND_HISTORY_SiZE][100];
 	int command_history_count = 0;
 	int command_history_pos = -1;
-	uart_puts("UART test... \n");
+	uart_puts("UART test OS is ready!");
 	init_fs();
+	uart_puts("\r\n:: ");
 	while(1){
 		c = uart_getc();
 		if(c == '\r'){
@@ -33,6 +34,7 @@ void notmain(void){
 			print_command(command, debug_mode);
 			process_command(command, &debug_mode);
 			index = 0;
+			uart_puts("\r\n:: ");
 		} else if (c == '\b' || c == 127){
 			if(index > 0){
 				index--;
