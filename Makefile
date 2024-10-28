@@ -1,4 +1,4 @@
-# Определяем компилятор и флаги
+# Визначаємо компілятор і прапори
 CC = aarch64-linux-gnu-gcc
 AS = aarch64-linux-gnu-as
 LD = aarch64-linux-gnu-ld
@@ -8,35 +8,35 @@ CFLAGS = -Wall -O2 -nostdlib -nostartfiles -ffreestanding -march=armv8-a
 ASFLAGS = #
 LDFLAGS = -nostdlib -T memmap
 
-# Исходные файлы
+# Вихідні файли
 SRC_C = notmain.c uart.c strings.c editor.c file_system.c
 SRC_ASM = strap.s
 OBJ = $(SRC_C:.c=.o) $(SRC_ASM:.s=.o)
 
-# Целевой файл
+# Цільовий файл
 TARGET = os.elf
 BINARY = os.bin
 
-# Правило по умолчанию
+# Правило за замовчуванням
 all: $(TARGET) $(BINARY)
 
-# Правило компиляции C файлов
+# Правило компіляції C файлів
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-# Правило ассемблерных файлов
+# Правило асемблерних файлів
 %.o: %.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
-# Линковка объектов
+# Лінкування об'єктів
 $(TARGET): $(OBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-# Конвертация в бинарный формат
+# Конвертація в бінарний формат
 $(BINARY): $(TARGET)
 	$(OBJCOPY) -O binary -R .fuse $< $@
 
-# Очистка
+# Очищення
 clean:
 	rm -f $(OBJ) $(TARGET) $(BINARY)
 
