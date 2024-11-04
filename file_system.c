@@ -98,13 +98,13 @@ void process_command(const char *cmd, int *debug_mode){
 		create_file(cmd + 4);
 	}else if (my_strcmp(cmd, "ls") == 0){
 		list_directory();
-	}else if (my_strncmp(cmd, "calc ", 5) == 0){
-        int result = eval(cmd + 5);
-        char buffer[32];
-        my_itoa(result, buffer);
-        uart_puts("Результат: ");
-        uart_puts(buffer);
-        uart_puts("\r\n");
+	}else if(my_strncmp(cmd, "calc ", 5) == 0) {
+		int result = eval(cmd + 5);
+		char buffer[32];
+		my_itoa(result, buffer);
+		uart_puts("Result: ");
+		uart_puts(buffer);
+		uart_puts("\r\n");
 	}else{
 		uart_puts("Unknown command. \r\n");
 	}
