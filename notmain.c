@@ -14,6 +14,9 @@ void notmain(void){
 	int command_history_count = 0;
 	int command_history_pos = -1;
 	uart_puts("UART test... \n");
+	uart_puts("\033[31mThis text should be red.\033[0m\n");
+    uart_puts("\033[32mThis text should be green.\033[0m\n");
+    uart_puts("\033[1mThis text should be bold.\033[0m\n");
 	init_fs();
 	while(1){
 		c = uart_getc();

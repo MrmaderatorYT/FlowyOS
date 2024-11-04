@@ -15,7 +15,12 @@ sudo apt install build-essential aarch64-linux-gnu qemu-system-arm
 
 > qemu-system-aarch64 -M virt -cpu cortex-a53 -m 128 -serial mon:stdio -kernel os.bin
 
+або
+> qemu-system-aarch64 -M virt -cpu cortex-a53 -m 128 -serial mon:stdio -kernel os.bin -nographic
+
 
 ### Плани розробки
 - [ ] команда version
 - [ ] файлова система
+- [x] програма калькулятора (альтернатива eval)
+- [ ] UI
