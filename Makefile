@@ -9,7 +9,7 @@ ASFLAGS = #
 LDFLAGS = -nostdlib -T memmap
 
 # Вихідні файли
-SRC_C = notmain.c uart.c calc.c strings.c editor.c file_system.c
+SRC_C = notmain.c uart.c ./programs/calc.c strings.c editor.c file_system.c
 SRC_ASM = strap.s
 OBJ = $(SRC_C:.c=.o) $(SRC_ASM:.s=.o)
 
