@@ -4,7 +4,7 @@ AS = aarch64-linux-gnu-as
 LD = aarch64-linux-gnu-ld
 OBJCOPY = aarch64-linux-gnu-objcopy
 
-CFLAGS = -Wall -O2 -nostdlib -nostartfiles -ffreestanding -march=armv8-a
+CFLAGS = -Wall -O2 -nostdlib -nostartfiles -ffreestanding -march=armv8-a -Wextra -g
 ASFLAGS = #
 LDFLAGS = -nostdlib -T memmap
 
@@ -35,6 +35,9 @@ $(TARGET): $(OBJ)
 # Конвертація в бінарний формат
 $(BINARY): $(TARGET)
 	$(OBJCOPY) -O binary -R .fuse $< $@
+
+run:
+	qemu-system-aarch64 -M virt -cpu cortex-a53 -m 128 -serial null -serial pty -kernel os.bin
 
 # Очищення
 clean:

@@ -3,9 +3,21 @@
 #include <stdint.h>
 #include "editor.h"
 #include "strings.h"
-#include "calc.h"
+#include "./programs/calc.h"
 
 FileSystem fs;
+
+void *memcpy(void *dest, const void *src, size_t n) {
+    unsigned char *d = (unsigned char *)dest;
+    const unsigned char *s = (const unsigned char *)src;
+
+    while (n--) {
+        *d++ = *s++;
+    }
+
+    return dest;
+}
+
 
 void init_fs(){
 	fs.file_count = 0;
@@ -45,6 +57,26 @@ int create_file(const char *name){
 	uart_puts("File created.\r\n");
 	return 0;
 }
+int delete_file(const char *name) {
+    if (fs.file_count == 0) {
+        uart_puts("No files to delete.\r\n");
+        return -1;
+    }
+    for (int i = 0; i < fs.file_count; i++) {
+        if (!fs.files[i].is_directory && my_strcmp(fs.files[i].name, name) == 0) {
+            for (int j = i; j < fs.file_count - 1; j++) {
+                fs.files[j] = fs.files[j + 1];
+            }
+            fs.file_count--;
+            uart_puts("File deleted.\r\n");
+            return 0;
+        }
+    }
+
+    uart_puts("File not found.\r\n");
+    return -1;
+}
+
 
 
 void list_directory(){
@@ -98,6 +130,8 @@ void process_command(const char *cmd, int *debug_mode){
 		create_file(cmd + 4);
 	}else if (my_strcmp(cmd, "ls") == 0){
 		list_directory();
+	}else if (my_strncmp(cmd, "rm -f ", 6) == 0){
+		delete_file(cmd + 6);
 	}else if(my_strncmp(cmd, "calc ", 5) == 0) {
 		int result = eval(cmd + 5);
 		char buffer[32];
