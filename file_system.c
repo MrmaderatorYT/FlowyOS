@@ -4,6 +4,7 @@
 #include "editor.h"
 #include "strings.h"
 #include "./programs/calc.h"
+#include "./programs/log.h"
 
 FileSystem fs;
 
@@ -102,22 +103,24 @@ File *find_file(const char *name){
 	}
 	return NULL;
 }
-void process_command(const char *cmd, int *debug_mode){
-	uart_puts("\r\n");
-	
-	if(my_strcmp(cmd, "help") == 0){
-		uart_puts("Avaible commands: help, echo <message>, debug on, debug off, mkdir <name>, ls, mkf <file> edit <file>. \r\n");
-	}else if(my_strncmp(cmd, "echo ", 5) == 0){
-		uart_puts(cmd + 5);
-		uart_putc('\r');
-		uart_putc('\n');
-	}else if(my_strcmp(cmd, "debug on") == 0){
-		*debug_mode = 1;
-		uart_puts("Debug mode enabled. \r\n");
-	}else if(my_strcmp(cmd, "debug off") == 0){
-		*debug_mode = 0;
-		uart_puts("Debug mode disable. \r\n");
-	}else if(my_strncmp(cmd, "mkdir ", 6) == 0){
+void process_command(const char *cmd, int *debug_mode, char command_history[][100], int command_history_count) {
+    uart_puts("\r\n");
+    
+    if(my_strcmp(cmd, "help") == 0){
+        uart_puts("Avaible commands: help, echo <message>, debug on, debug off, mkdir <name>, ls, mkf <file> edit <file>. \r\n");
+    }else if(my_strncmp(cmd, "echo ", 5) == 0){
+        uart_puts(cmd + 5);
+        uart_putc('\r');
+        uart_putc('\n');
+    }else if(my_strcmp(cmd, "debug on") == 0){
+        *debug_mode = 1;
+        uart_puts("Debug mode enabled. \r\n");
+    }else if(my_strcmp(cmd, "debug off") == 0){
+        *debug_mode = 0;
+        uart_puts("Debug mode disable. \r\n");
+    }else if (my_strcmp(cmd, "log") == 0) {
+        show_command_history(command_history, command_history_count);
+    }else if(my_strncmp(cmd, "mkdir ", 6) == 0){
 		create_directory(cmd + 6);
 	}else if(my_strncmp(cmd, "edit ", 5) == 0){
 		File *file = find_file(cmd + 5);

@@ -25,7 +25,7 @@ int create_directory(const char *name);
 int create_file(const char *name);
 void list_directory();
 File *find_file(const char *name);
-void process_command(const char *cmd, int *debug_mode);
+void process_command(const char *cmd, int *debug_mode, char command_history[][100], int command_history_count);
 void print_command(const char *cmd, int debug_mode);
 
 #endif

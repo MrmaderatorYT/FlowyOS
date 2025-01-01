@@ -24,3 +24,18 @@ sudo apt install build-essential aarch64-linux-gnu qemu-system-arm
 - [ ] файлова система
 - [x] програма калькулятора (альтернатива eval)
 - [ ] UI
+
+
+
+### Для mac:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+source ~/.zprofile
+
+brew update
+
+brew install qemu make gcc
+
+brew install aarch64-elf-gcc
+
+
