@@ -25,29 +25,29 @@ void init_fs(){
 }
 int create_directory(const char *name){
 	if(fs.file_count >= MAX_FILES){
-		uart_puts("FileSystem is full, cannot create directory.\r\n");
+		uart_puts(RED "FileSystem is full, cannot create directory.\r\n" RESET);
 		return -1;
 	}
 	for (int i = 0; i < fs.file_count; i++){
 		if(my_strcmp(fs.files[i].name, name) == 0){
-			uart_puts("Directory already exist.\r\n");
+			uart_puts(YELLOW "Directory already exist.\r\n" RESET);
 			return -1;
 		}
 	}
 	my_strcpy(fs.files[fs.file_count].name, name);
 	fs.files[fs.file_count].is_directory = 1;
 	fs.file_count++;
-	uart_puts("Directory created. \r\n");
+	uart_puts(GREEN "Directory created. \r\n" RESET);
 	return 0;
 }
 int create_file(const char *name){
 	if(fs.file_count >= MAX_FILES){
-		uart_puts("FileSystem is full, cannot crete file. \r\n");
+		uart_puts(RED "FileSystem is full, cannot crete file. \r\n" RESET);
 		return -1;
 	}
 	for (int i = 0; i < fs.file_count; i++){
 		if(my_strcmp(fs.files[i].name, name) == 0){
-			uart_puts("File already exist.\r\n");
+			uart_puts(YELLOW "File already exist.\r\n" RESET);
 			return -1;
 		}
 	}
@@ -55,12 +55,12 @@ int create_file(const char *name){
 	fs.files[fs.file_count].is_directory = 0;
 	fs.files[fs.file_count].content[0] = '\0';
 	fs.file_count++;
-	uart_puts("File created.\r\n");
+	uart_puts(GREEN "File created.\r\n" RESET);
 	return 0;
 }
 int delete_file(const char *name) {
     if (fs.file_count == 0) {
-        uart_puts("No files to delete.\r\n");
+        uart_puts(YELLOW "No files to delete.\r\n" RESET);
         return -1;
     }
     for (int i = 0; i < fs.file_count; i++) {
@@ -69,12 +69,12 @@ int delete_file(const char *name) {
                 fs.files[j] = fs.files[j + 1];
             }
             fs.file_count--;
-            uart_puts("File deleted.\r\n");
+            uart_puts(GREEN "File deleted.\r\n" RESET);
             return 0;
         }
     }
 
-    uart_puts("File not found.\r\n");
+    uart_puts(YELLOW "File not found.\r\n" RESET);
     return -1;
 }
 
@@ -143,12 +143,12 @@ void process_command(const char *cmd, int *debug_mode, char command_history[][10
 		uart_puts(buffer);
 		uart_puts("\r\n");
 	}else{
-		uart_puts("Unknown command. \r\n");
+		uart_puts(YELLOW "Unknown command. \r\n" RESET);
 	}
 }
 void print_command(const char *cmd, int debug_mode){
 	if(debug_mode){
-		uart_puts("\r\nReceived command: ");
+		uart_puts(LIGHT_BLUE "\r\nReceived command: " RESET);
 		uart_puts(cmd);
 		uart_putc('\r');
 		uart_putc('\n');

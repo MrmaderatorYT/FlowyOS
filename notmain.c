@@ -15,7 +15,7 @@ void notmain(void) {
     char command_history[COMMAND_HISTORY_SIZE][100];
     int command_history_count = 0;
     int command_history_pos = -1;
-    uart_puts("UART test OS is ready!\n");
+    uart_puts(RED "UART test OS is ready!\n" RESET);
 
     init_fs();
     while (1) {
