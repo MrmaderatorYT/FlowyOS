@@ -13,6 +13,8 @@ typedef struct{
 	char name [MAX_NAME_LEGTH];
 	int is_directory;
 	char content[MAX_FILE_SIZE];
+	int parent;                      // Parent directory index
+
 } File;
 typedef struct{
 	File files[MAX_FILES];

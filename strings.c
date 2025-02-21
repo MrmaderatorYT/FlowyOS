@@ -66,4 +66,29 @@ void my_strcpy(char *dest, const char *src){
 	}
 	*dest = '\0';
 }
+// Приєднує src до кінця dest та повертає dest.
+char *my_strcat(char *dest, const char *src) {
+    char *ptr = dest;
+    // Знаходимо кінець рядка dest
+    while (*ptr != '\0') {
+        ptr++;
+    }
+    // Копіюємо src до кінця dest
+    while (*src != '\0') {
+        *ptr++ = *src++;
+    }
+    // Завершуємо рядок символом завершення '\0'
+    *ptr = '\0';
+    return dest;
+}
+// Повертає вказівник на останнє входження символу c у рядку s
+char *my_strrchr(const char *s, int c) {
+    const char *last = NULL;
+    do {
+        if (*s == (char)c) {
+            last = s;
+        }
+    } while (*s++);
+    return (char *)last;
+}
 
