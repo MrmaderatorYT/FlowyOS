@@ -7,9 +7,9 @@ CFLAGS = -Wall -O2 -nostdlib -nostartfiles -ffreestanding -march=armv8-a -Wextra
 ASFLAGS = #
 LDFLAGS = -nostdlib -T memmap
 
-SRC_C = notmain.c uart.c programs/calc.c programs/log.c strings.c editor.c file_system.c
-SRC_ASM = strap.s
-OBJ = $(SRC_C:.c=.o) $(SRC_ASM:.s=.o)
+SRC_C = kernel.c uart.c programs/calc.c programs/log.c strings.c editor.c file_system.c
+SRC_ASM = start.asm
+OBJ = $(SRC_C:.c=.o) $(SRC_ASM:.asm=.o)
 
 TARGET = os.elf
 BINARY = os.bin
@@ -19,7 +19,7 @@ all: $(TARGET) $(BINARY)
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-%.o: %.s
+%.o: %.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(TARGET): $(OBJ)
@@ -29,7 +29,7 @@ $(BINARY): $(TARGET)
 	$(OBJCOPY) -O binary -R .fuse $< $@
 
 run:
-	qemu-system-aarch64 -M virt -cpu cortex-a53 -m 128 -serial stdio -monitor none -kernel os.bin
+	qemu-system-aarch64 -M virt -cpu cortex-a53 -m 128 -nographic -kernel os.bin
 clean:
 	rm -f $(OBJ) $(TARGET) $(BINARY)
 
